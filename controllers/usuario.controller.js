@@ -48,28 +48,23 @@ exports.findAll = (req,res) => {
 //============================================================
 // MOSTRAR UN USUARIO (ID)
 //============================================================
-exports.findOne = (req,res) => {
-
-    Usuario.findByIdAndUpdate(req.params.id, {
-        username: req.body.username,
-        email: req.body.email || "tvadmin@telsur.cl",
-        userrole: req.body.userrole || "USER_ROLE"
-    }, {new: true})
+exports.findOne = (req, res) => {
+    Usuario.findById(req.params.id)
     .then(data => {
         if(!data) {
             return res.status(404).send({
-                message: "No se ha encontrado el registro de id: " + req.params.id
-            });
+                message: "No existe registro con este id: " + req.params.id
+            });            
         }
         res.send(data);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "No se ha encontrado el registro de id: " + req.params.id
+                message: "No existe registro con este id: " + req.params.id
             });                
         }
         return res.status(500).send({
-            message: "Error updating note with id " + req.params.id
+            message: "Error al recibir el registro, ID: " + req.params.id
         });
     });
 };

@@ -1,3 +1,4 @@
+var jwt = require('jsonwebtoken');
 const Canal = require('../models/canal');
 
 //=======================================================
@@ -15,7 +16,7 @@ exports.create = (req, res) => {
         nombre: req.body.nombre,
         ciudad: req.body.ciudad,
         zonal: req.body.zonal || "N/A",
-        urlPng: req.urlPng,
+        urlPng: req.body.urlPng,
         urlVisio: req.body.urlVisio,
         urlEncoder: req.body.urlEncoder
     });
@@ -82,7 +83,7 @@ exports.update = (req, res) => {
         nombre: req.body.nombre,
         ciudad: req.body.ciudad,
         zonal: req.body.zonal || "N/A",
-        urlPng: req.urlPng,
+        urlPng: req.body.urlPng,
         urlVisio: req.body.urlVisio,
         urlEncoder: req.body.urlEncoder
     }, {new: true})

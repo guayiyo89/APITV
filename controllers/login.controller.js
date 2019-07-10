@@ -5,7 +5,7 @@ var jwt = require('jsonwebtoken');
 //Importamos el SEED para el token
 var SEED = require('../config/auth').SEED;
 
-exports.login = (req,res) => {
+exports.login = (req, res) => {
     var body = req.body;
     Usuario.findOne({username: body.username}, (err, usuarioDB) => {
         if (err){
@@ -42,24 +42,25 @@ exports.login = (req,res) => {
             usuario: usuarioDB,
             token: token,
             id: usuarioDB._id,
-            menu: obtenerMenu(usuarioDB.role)
+            menu: obtenerMenu(usuarioDB.userrole)
         });
 
-        function obtenerMenu(ROLE) {
-            var menu = [
-                {titulo: 'Home', url: '/canales', icono: ''},
-                {titulo: 'Busqueda', url: '/busqueda', icono: ''}
-                ];
-            
-            if(ROLE === 'ADMIN_ROLE') {
-                // menu[1].submenu.unshift({titulo:'Usuarios', url:'/usuarios'});
-                menu.unshift([
-                    {titulo: 'Admin', url: '/admin', icono: ''},
-                    {titulo: 'AdminUser', url: '/usuarios', icono: ''}
-            ])
-            }
-            return menu;
-        }
-
     })
+
+    function obtenerMenu(ROLE) {
+        var menu = [
+            {titulo: 'Home', url: '/canales', icono: ''},
+            {titulo: 'Busqueda', url: '/busqueda', icono: ''}
+            ];
+        
+        if(ROLE === 'ADMIN_ROLE') {
+            // menu[1].submenu.unshift({titulo:'Usuarios', url:'/usuarios'});
+            menu.unshift([
+                {titulo: 'Admin', url: '/admin', icono: ''},
+                {titulo: 'AdminUser', url: '/usuarios', icono: ''}
+            ])
+        };
+        return menu;
+    }
+
 }

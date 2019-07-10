@@ -12,7 +12,7 @@ app.use(function(req, res, next) {
     next();
   });
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //Conexion a la DB
@@ -31,6 +31,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 require('./routes/canal.routes.js')(app);
 require('./routes/usuario.routes.js')(app);
 require('./routes/login.routes')(app);
+require('./routes/upload.routes')(app);
 require('./routes/app.routes.js')(app);
 
 var server = app.listen(3000, function () {

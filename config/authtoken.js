@@ -30,8 +30,9 @@ exports.verificaAdmin = function (req, res, next) {
 
     var usuario = req.usuario; // obtenemos el usuario del metodo anterior
 
-    if(usuario.role === 'ADMIN_ROLE'){
+    if(usuario.userrole === 'ADMIN_ROLE'){
         next();
+        console.log('Admin!');
         return;
     } else {
             return res.status(401).json({
@@ -50,7 +51,7 @@ exports.verificaUser = function (req, res, next) {
     var usuario = req.usuario; // obtenemos el usuario del metodo anterior
     var id = req.params.id;
 
-    if(usuario.role === 'ADMIN_ROLE' || usuario._id === id){
+    if(usuario.userrole === 'ADMIN_ROLE' || usuario._id === id){
         next();
         return;
     } else {
