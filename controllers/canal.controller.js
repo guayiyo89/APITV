@@ -16,8 +16,7 @@ exports.create = (req, res) => {
         nombre: req.body.nombre,
         ciudad: req.body.ciudad,
         zonal: req.body.zonal || "N/A",
-        urlPng: req.body.urlPng,
-        urlVisio: req.body.urlVisio,
+        archivos: req.body.archivos,
         urlEncoder: req.body.urlEncoder
     });
 

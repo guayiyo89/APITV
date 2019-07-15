@@ -29,6 +29,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 //Importamos las rutas
 require('./routes/canal.routes.js')(app);
+require('./routes/archivos.routes.js')(app);
 require('./routes/usuario.routes.js')(app);
 require('./routes/login.routes')(app);
 require('./routes/upload.routes')(app);

@@ -7,8 +7,7 @@ const canalSchema = new Schema ({
     nombre: {type: String, required: [true, 'El nombre es necesario']},
     ciudad: {type: String, required: false},
     zonal: {type: String, required: [true, 'Asigne una zonal']},
-    urlPng: {type: String, required: false},
-    urlVisio: {type: String, required: false},
+    archivos: [{type: mongoose.Schema.Types.ObjectId, ref: 'Archivo'}],
     urlEncoder: {type: String, required: false},
 
 },{collection: 'canales'});

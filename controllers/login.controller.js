@@ -34,7 +34,7 @@ exports.login = (req, res) => {
         }
 
         //TOKEN
-        Usuario.password = ':)'; //para no enviar el psswd en el token
+        usuarioDB.password = ':)'; //para no enviar el psswd en el token
         var token = jwt.sign({usuario: usuarioDB}, SEED,{ expiresIn: 14400}); //4hrs
 
         res.status(200).json({

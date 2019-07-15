@@ -1,41 +1,16 @@
-const multer = require('multer');
+let fileUpload = require('express-fileupload');
 
-const DIR = './uploads';
+var jwt = require('jsonwebtoken');
+const mdAuth = require('../config/authtoken');
 
-var storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, DIR);
-    },
-    filename: (req, file, cb) => {
-        console.log(file);
-        var filetype = '';
-        if(file.mimetype === 'image/png'){
-            filetype = 'png';
-        }
-        if(file.mimetype === 'image/jpeg'){
-            filetype = 'jpg';
-        }
-        if(file.mimetype === 'image/gif'){
-            filetype = 'gif';
-        }
-        if(file.mimetype === 'application/vnd.visio'){
-            filetype = 'vsd';
-        }
-        if(file.mimetype === 'application/octec-stream'){
-            filetype = 'vsdx';
-        }
-        cb(null, file.fieldname + '-' + Date.now() + '.' + filetype);
-    }
-});
-
-var upload = multer({storage: storage});
 
 module.exports = (app) => {
-    const archivo = require('../controllers/upload.controller');
+    const upload = require('../controllers/upload.controller');
+    app.use(fileUpload());
 
-    app.get('/imagenes', archivo.getImages);
+    app.post('/upload/:tipo',[mdAuth.verificaToken, mdAuth.verificaAdmin], upload.uploadFile );  // tipo: VIsio o Imagen 
 
-    app.get('/visios', archivo.getVisios);
+    app.get('/upload/:tipo/:archivo',[mdAuth.verificaToken, mdAuth.verificaAdmin], upload.getFile );
 
-    app.post('/upload', upload.single('image'), archivo.uploadFile );
+   // app.post('/upload', upload.single('image'), archivo.uploadFile );
 }
