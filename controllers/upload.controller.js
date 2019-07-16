@@ -76,7 +76,7 @@ exports.getFile = (req,res) => {
     let ruta = pathUpload+ '/' + req.params.tipo + '/' + archivo;
     if (fs.existsSync(ruta)) {
         if (extencionImagenes.indexOf(extencion) < 0) {     // si no es Foto la descarga
-            res.download(ruta, nombreArchivo);
+            res.download(ruta);
         } else {
             res.sendFile(ruta);
         }

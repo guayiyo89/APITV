@@ -1,5 +1,6 @@
 var jwt = require('jsonwebtoken');
 const Canal = require('../models/canal');
+const Archivo = require('../models/archivo');
 
 //=======================================================
 // Create and Save a new Note
@@ -35,6 +36,7 @@ exports.create = (req, res) => {
 // Retrieve and return all notes from the database.
 exports.findAll = (req, res) => {
     Canal.find()
+    .populate({ path: 'archivos', model: Archivo }) 
     .then(data => {
         res.send(data);
     }).catch(err => {
@@ -48,6 +50,7 @@ exports.findAll = (req, res) => {
 // Find a single note with a noteId
 exports.findOne = (req, res) => {
     Canal.findById(req.params.id)
+    .populate({ path: 'archivos', model: Archivo }) 
     .then(data => {
         if(!data) {
             return res.status(404).send({
@@ -82,8 +85,7 @@ exports.update = (req, res) => {
         nombre: req.body.nombre,
         ciudad: req.body.ciudad,
         zonal: req.body.zonal || "N/A",
-        urlPng: req.body.urlPng,
-        urlVisio: req.body.urlVisio,
+        archivos: req.body.archivos,
         urlEncoder: req.body.urlEncoder
     }, {new: true})
     .then(data => {
@@ -136,6 +138,7 @@ exports.search = (req, res) => {
     // La transformo en una expresion regular. No Case-Sensitive
     var regex = RegExp(word,'i');
     Canal.find({nombre: regex})
+    .populate({ path: 'archivos', model: Archivo }) 
     .then(data => {
         if(!data) {
             return res.status(404).send({
@@ -160,6 +163,7 @@ exports.search = (req, res) => {
 exports.byZonal = (req, res) => {
     var zona = req.params.zonal;
     Canal.find({zonal: zona})
+    .populate({ path: 'archivos', model: Archivo }) 
     .then(data => {
         if(!data) {
             return res.status(404).send({

@@ -10,7 +10,7 @@ module.exports = (app) => {
 
     app.post('/upload/:tipo',[mdAuth.verificaToken, mdAuth.verificaAdmin], upload.uploadFile );  // tipo: VIsio o Imagen 
 
-    app.get('/upload/:tipo/:archivo',[mdAuth.verificaToken, mdAuth.verificaAdmin], upload.getFile );
+    app.get('/upload/:tipo/:archivo',[mdAuth.verificaToken], upload.getFile );
 
    // app.post('/upload', upload.single('image'), archivo.uploadFile );
 }
