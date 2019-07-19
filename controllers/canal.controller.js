@@ -71,7 +71,7 @@ exports.findOne = (req, res) => {
 };
 
 //=======================================================
-// Update a note identified by the noteId in the request
+// Update a canal identified by the noteId in the request
 exports.update = (req, res) => {
     // Validate Request
     if(!req.body.nombre) {
@@ -85,7 +85,6 @@ exports.update = (req, res) => {
         nombre: req.body.nombre,
         ciudad: req.body.ciudad,
         zonal: req.body.zonal || "N/A",
-        archivos: req.body.archivos,
         urlEncoder: req.body.urlEncoder
     }, {new: true})
     .then(data => {
@@ -106,6 +105,29 @@ exports.update = (req, res) => {
         });
     });
 };
+
+exports.editImagen = (req, res) => {
+    Canal.findByIdAndUpdate(req.params.id, {
+        archivos: req.body.archivos
+    }, {new: true})
+    .then(data => {
+        if(!data) {
+            return res.status(404).send({
+                message: "No se ha encontrado el registro de id: " + req.params.id
+            });
+        }
+        res.send(data);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "No se ha encontrado el registro de id: " + req.params.id
+            });                
+        }
+        return res.status(500).send({
+            message: "Error updating note with id " + req.params.id
+        });
+    });
+}
 
 // =======================================================
 // Delete a note with the specified noteId in the request
