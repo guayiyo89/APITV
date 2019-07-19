@@ -14,6 +14,9 @@ module.exports = (app) => {
 
     // Actualiza un canal por Id
     app.put('/canales/:id', [mdAuth.verificaToken, mdAuth.verificaAdmin], canal.update);
+    
+    // Actualiza la img de un canal por Id
+    app.put('/canales/img/:id', [mdAuth.verificaToken, mdAuth.verificaAdmin], canal.editImagen);
 
     // Elimina un canal por Id
     app.delete('/canales/:id', [mdAuth.verificaToken, mdAuth.verificaAdmin], canal.delete);
